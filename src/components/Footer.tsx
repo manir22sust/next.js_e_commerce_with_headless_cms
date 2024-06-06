@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row justify-between gap-24">
         {/* LEFT */}
         <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
-          <Link href="/" className="">
+          <Link href="/" className="flex gap-2">
             <Image src="/logo.png" alt="" width={24} height={24} />
             <div className="text-2xl tracking-wide">Manir</div>
           </Link>
