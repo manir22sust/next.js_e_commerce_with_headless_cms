@@ -1,8 +1,26 @@
+/* "use client"; */
+
 import CategoryList from "@/components/CategoryList";
 import ProductList from "@/components/ProductList";
 import Slider from "@/components/Slider";
+import { useWixClient } from "@/hooks/useWixClient";
+import { wixClientServer } from "@/lib/wixClientServer";
 
-export default function Home() {
+import { useEffect } from "react";
+
+const Home = async () => {
+  /* const wixClient = useWixClient();
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const res = await wixClient.products.queryProducts().find();
+      console.log(res);
+    };
+    getProducts();
+  }, [wixClient]); */
+  const wixClient = await wixClientServer();
+  const res = await wixClient.products.queryProducts().find();
+  console.log(res);
   return (
     <div className="">
       <Slider />
@@ -25,4 +43,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;
