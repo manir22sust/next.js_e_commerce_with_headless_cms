@@ -5,8 +5,6 @@ import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 
 const Single = async ({ params }: { params: { slug: string } }) => {
-  console.log(params.slug);
-
   const wixClient = await wixClientServer();
   const products = await wixClient.products
     .queryProducts()
@@ -47,13 +45,25 @@ const Single = async ({ params }: { params: { slug: string } }) => {
         )}
 
         <div className="h-[2px] bg-gray-100" />
-        <CustomizeProducts />
-        <Add />
+        {product.variants && product.productOptions ? (
+          <CustomizeProducts
+            productId={product._id!}
+            variants={product.variants}
+            productOptions={product.productOptions}
+          />
+        ) : (
+          <Add
+            productId={product._id!}
+            variantId="00000000-0000-0000-0000-000000000000"
+            stockNumber={product.stock?.quantity || 0}
+          />
+        )}
+
         <div className="h-[2px] bg-gray-100" />
         {product.additionalInfoSections?.map((section: any) => (
           <div className="text-sm" key={section.title}>
             <h4 className="font-medium mb-4">{section.title} </h4>
-            <p>{section.description}</p>
+            <p> {section.description}</p>
           </div>
         ))}
       </div>
