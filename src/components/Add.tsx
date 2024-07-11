@@ -1,4 +1,5 @@
 "use client";
+import { useCartStore } from "@/hooks/useCartStore";
 import { useWixClient } from "@/hooks/useWixClient";
 import { useState } from "react";
 
@@ -24,8 +25,8 @@ const Add = ({
     }
   };
   const wixClient = useWixClient();
-
-  const addItem = async () => {
+  const { addItem, isLoading } = useCartStore();
+  /*   const addItem = async () => {
     const response = await wixClient.currentCart.addToCurrentCart({
       lineItems: [
         {
@@ -39,7 +40,7 @@ const Add = ({
       ],
     });
     console.log(response);
-  };
+  }; */
   return (
     <div className="flex flex-col gap-4">
       <h4 className="font-medium">Choose a Quantity </h4>
@@ -74,8 +75,9 @@ const Add = ({
         </div>
 
         <button
-          onClick={addItem}
-          className="w-36 text-sm rounded-3xl ring-1 ring-globalRedColor text-globalRedColor py-2 px-4 hover:bg-globalRedColor hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:text-white disabled:ring-none"
+          onClick={() => addItem(wixClient, productId, variantId, quantity)}
+          disabled={isLoading}
+          className="w-36 text-sm rounded-3xl ring-1 ring-globalRedColor text-globalRedColor py-2 px-4 hover:bg-globalRedColor hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
         >
           {" "}
           Add to Cart
